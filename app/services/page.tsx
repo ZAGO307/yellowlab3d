@@ -66,7 +66,7 @@ const PLANS = [
 ];
 
 const ADDONS = [
-  { name: "Post-traitement (ponçage)", price: "5 € / pièce" },
+  { name: "Post-traitement (ponçage)", price: "5 CHF / pièce" },
   { name: "Primer de surface", price: "8 € / pièce" },
   { name: "Peinture monocouleur", price: "15 € / pièce" },
   { name: "Peinture multicouleur", price: "25–60 € / pièce" },
