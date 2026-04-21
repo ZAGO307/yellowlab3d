@@ -8,7 +8,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 /* ─── Config options ─── */
 const TECHNOLOGIES = [
-  { id: "fdm-standard", label: "FDM Standard", sublabel: "0,05 €/g", resolution: "0.2 mm" },
+  { id: "fdm-standard", label: "FDM Standard", sublabel: "0,05 CHF/g", resolution: "0.2 mm" },
   { id: "fdm-pro", label: "FDM Pro", sublabel: "0,08 €/g", resolution: "0.1 mm" },
   { id: "resin-standard", label: "Résine Standard", sublabel: "0,15 €/g", resolution: "0.05 mm" },
   { id: "resin-engineering", label: "Résine Engineering", sublabel: "0,25 €/g", resolution: "0.05 mm" },
