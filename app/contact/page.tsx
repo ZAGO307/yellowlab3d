@@ -46,10 +46,8 @@ export default function ContactPage() {
               <h2 className="font-display text-2xl text-white uppercase tracking-wide mb-6">Informations</h2>
               <ul className="space-y-6">
                 {[
-                  { icon: Mail, label: "Email", value: "contact@yellowlab3d.fr", href: "mailto:contact@yellowlab3d.fr" },
-                  { icon: Phone, label: "Téléphone", value: "+33 1 23 45 67 89", href: "tel:+33123456789" },
-                  { icon: MapPin, label: "Adresse", value: "12 Rue de la Fabrication\n75011 Paris, France", href: "#" },
-                  { icon: Clock, label: "Horaires", value: "Lun–Ven : 9h–18h\nSam : 10h–14h", href: null },
+                  { icon: Mail, label: "Email", value: "contactyellowlab3d@gmail.com", href: "mailto:contactyellowlab3d@gmail.com" },
+                  { icon: Phone, label: "Téléphone", value: "+41 79 460 31 65", href: "tel:+41794603165" },
                 ].map(({ icon: Icon, label, value, href }) => (
                   <li key={label} className="flex items-start gap-4">
                     <div className="w-10 h-10 border border-yellow-400/30 bg-yellow-400/5 flex items-center justify-center shrink-0">
