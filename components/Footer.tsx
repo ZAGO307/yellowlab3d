@@ -71,12 +71,12 @@ export default function Footer() {
             </li>
             <li className="flex items-start gap-3 text-gray-400 text-sm">
               <MapPin size={14} className="text-yellow-400 shrink-0 mt-0.5" />
-              12 Rue de la Fabrication<br/>75011 Paris, France
+              Genève, Suisse
             </li>
           </ul>
           <div className="mt-6 p-3 border border-yellow-400/20 bg-yellow-400/5">
             <p className="text-xs text-yellow-400/80 uppercase tracking-wider">Délai moyen</p>
-            <p className="text-white font-display text-2xl mt-1">24–72H</p>
+            <p className="text-white font-display text-2xl mt-1">48–72H</p>
           </div>
         </div>
       </div>

@@ -78,22 +78,7 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* Map placeholder */}
-            <div className="border border-gray-800 h-48 flex items-center justify-center bg-black/40 relative overflow-hidden">
-              <div className="absolute inset-0 grid-bg opacity-50" />
-              <div className="text-center relative z-10">
-                <MapPin size={32} className="text-yellow-400 mx-auto mb-2" />
-                <p className="text-gray-400 text-sm">75011 Paris, France</p>
-                <a
-                  href="https://maps.google.com/?q=75011+Paris"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-yellow-400 text-xs hover:underline"
-                >
-                  Voir sur Google Maps →
-                </a>
-              </div>
-            </div>
+
           </div>
 
           {/* Form */}
@@ -200,7 +185,7 @@ export default function ContactPage() {
               { q: "Quels formats acceptez-vous ?", a: "STL, OBJ, STEP, STP, 3MF, SolidWorks, Fusion 360, et plus." },
               { q: "Quel est le délai de réponse ?", a: "Nous répondons en moins de 2h en jours ouvrés." },
               { q: "Faites-vous des remises pour les pros ?", a: "Oui ! Contactez-nous pour un tarif volume ou contrat mensuel." },
-              { q: "Puis-je venir en atelier ?", a: "Oui sur rendez-vous à Paris (75011). Contactez-nous pour convenir d'un horaire." },
+              { q: "Puis-je venir en atelier ?", a: "Oui sur rendez-vous à Genève. Contactez-nous pour convenir d'un horaire." },
             ].map(({ q, a }) => (
               <div key={q} className="border border-gray-800 p-5 hover:border-yellow-400/40 transition-all">
                 <p className="font-display text-base text-white uppercase tracking-wide mb-2">{q}</p>
