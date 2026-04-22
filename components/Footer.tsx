@@ -26,7 +26,7 @@ export default function Footer() {
             <span className="font-display text-2xl text-white">YellowLAB<span className="text-yellow-400">3D</span></span>
           </Link>
           <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-            Service d'impression 3D professionnel. FDM, résine, post-traitement. 
+            Service d'impression 3D professionnel à Genève. FDM et résine haute résolution.
             Nous donnons vie à vos idées avec précision et rapidité.
           </p>
           <div className="flex gap-4 mt-6">
@@ -63,11 +63,11 @@ export default function Footer() {
           <ul className="space-y-3">
             <li className="flex items-center gap-3 text-gray-400 text-sm">
               <Mail size={14} className="text-yellow-400 shrink-0" />
-              contact@yellowlab3d.fr
+              contactyellowlab3d@gmail.com
             </li>
             <li className="flex items-center gap-3 text-gray-400 text-sm">
               <Phone size={14} className="text-yellow-400 shrink-0" />
-              +33 1 23 45 67 89
+              +41 79 460 31 65
             </li>
             <li className="flex items-start gap-3 text-gray-400 text-sm">
               <MapPin size={14} className="text-yellow-400 shrink-0 mt-0.5" />
