@@ -14,8 +14,8 @@ const TECHNOLOGIES = [
 ];
 
 const MATERIALS_BY_TECH: Record<string, string[]> = {
-  "fdm-standard": ["PLA - Blanc", "PLA - Noir", "PLA - Gris", "PLA - Rouge", "PLA - Bleu", "PETG - Transparent", "PETG - Noir"],
-  "fdm-pro": ["ABS - Noir", "ABS - Blanc", "PETG-CF - Noir", "Nylon PA12 - Naturel", "TPU 95A - Noir", "TPU 95A - Blanc"],
+  "fdm-standard": ["PLA - Blanc", "PLA - Noir", "PLA - Gris", "PLA - Rouge", "PLA - Bleu"],
+  "fdm-pro": ["PETG - Noir", "PETG - Blanc", "PETG - Transparent", "ABS - Noir", "ABS - Blanc", "ABS - Gris"],
   "resin-standard": ["Résine - Gris", "Résine - Blanc", "Résine - Transparent", "Résine - Noir"],
   "resin-engineering": ["Résine ABS-Like - Gris", "Résine Dental", "Résine Flexible - Transparent"],
 };
