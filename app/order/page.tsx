@@ -1,7 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, X, ShoppingCart, AlertCircle, Check } from "lucide-react";
+import { Upload, X, ShoppingCart, AlertCircle, Check, Loader2 } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -66,6 +66,7 @@ export default function OrderPage() {
     country: "Suisse",
   });
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
 
@@ -98,7 +99,6 @@ export default function OrderPage() {
   const subtotal = () => pricePerGram() * form.weight * form.quantity;
   const total = () => subtotal() + deliveryPrice();
 
-  /* ─── Validation step 2 ─── */
   const goToStep2 = () => {
     setError(null);
     if (files.length === 0) {
@@ -108,7 +108,6 @@ export default function OrderPage() {
     setStep(2);
   };
 
-  /* ─── Validation step 3 ─── */
   const goToStep3 = () => {
     setError(null);
     const missing = [];
@@ -132,26 +131,50 @@ export default function OrderPage() {
   const handleCheckout = async () => {
     setLoading(true);
     setError(null);
+
     try {
+      // 1. Upload des fichiers vers R2
+      setUploading(true);
+      const orderId = `order_${Date.now()}`;
+      const uploadedUrls: string[] = [];
+      const uploadedNames: string[] = [];
+
+      for (const file of files) {
+        const fd = new FormData();
+        fd.append("file", file);
+        fd.append("orderId", orderId);
+        const res = await fetch("/api/upload", { method: "POST", body: fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Erreur upload");
+        uploadedUrls.push(data.url);
+        uploadedNames.push(file.name);
+      }
+      setUploading(false);
+
+      // 2. Créer la session Stripe
       const res = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           form,
-          files: files.map((f) => f.name),
+          fileUrls: uploadedUrls,
+          fileNames: uploadedNames,
           total: total(),
           subtotal: subtotal(),
           deliveryPrice: deliveryPrice(),
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Erreur lors de la création du paiement");
+      if (!res.ok) throw new Error(data.error || "Erreur paiement");
+
+      // 3. Redirection Stripe
       const stripe = await stripePromise;
       if (stripe && data.sessionId) {
         await stripe.redirectToCheckout({ sessionId: data.sessionId });
       }
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Une erreur est survenue");
+      setUploading(false);
     } finally {
       setLoading(false);
     }
@@ -209,7 +232,6 @@ export default function OrderPage() {
             {/* ── STEP 1 ── */}
             {step === 1 && (
               <>
-                {/* File upload */}
                 <div>
                   <h2 className="font-display text-2xl text-white uppercase tracking-wide mb-6 flex items-center gap-3">
                     <span className="w-8 h-8 bg-yellow-400 text-black flex items-center justify-center text-sm">1</span>
@@ -254,7 +276,6 @@ export default function OrderPage() {
                   )}
                 </div>
 
-                {/* Technology */}
                 <div>
                   <h2 className="font-display text-2xl text-white uppercase tracking-wide mb-6 flex items-center gap-3">
                     <span className="w-8 h-8 bg-yellow-400 text-black flex items-center justify-center text-sm">2</span>
@@ -277,7 +298,6 @@ export default function OrderPage() {
                   </div>
                 </div>
 
-                {/* Material */}
                 <div>
                   <h2 className="font-display text-2xl text-white uppercase tracking-wide mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 bg-yellow-400 text-black flex items-center justify-center text-sm">3</span>
@@ -298,7 +318,6 @@ export default function OrderPage() {
                   </div>
                 </div>
 
-                {/* Infill & Quantity */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <h2 className="font-display text-xl text-white uppercase tracking-wide mb-4">Remplissage</h2>
@@ -313,14 +332,12 @@ export default function OrderPage() {
                   </div>
                 </div>
 
-                {/* Weight */}
                 <div>
                   <h2 className="font-display text-xl text-white uppercase tracking-wide mb-4">Poids estimé (grammes)</h2>
                   <input type="number" min={1} max={10000} value={form.weight} onChange={(e) => updateForm("weight", parseInt(e.target.value) || 1)} className="input-field w-full" />
                   <p className="text-gray-600 text-xs mt-2">Estimez le poids de votre pièce — nous ajusterons si nécessaire.</p>
                 </div>
 
-                {/* Delivery */}
                 <div>
                   <h2 className="font-display text-2xl text-white uppercase tracking-wide mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 bg-yellow-400 text-black flex items-center justify-center text-sm">4</span>
@@ -348,7 +365,6 @@ export default function OrderPage() {
                   </div>
                 </div>
 
-                {/* Notes */}
                 <div>
                   <h2 className="font-display text-xl text-white uppercase tracking-wide mb-4">Notes (optionnel)</h2>
                   <textarea rows={3} placeholder="Précisions sur votre projet…" value={form.notes} onChange={(e) => updateForm("notes", e.target.value)} className="input-field w-full resize-none" />
@@ -437,6 +453,7 @@ export default function OrderPage() {
                   </h2>
                   <div className="space-y-4">
                     {[
+                      { label: "Fichiers", value: files.map(f => f.name).join(", ") },
                       { label: "Technologie", value: TECHNOLOGIES.find((t) => t.id === form.technology)?.label },
                       { label: "Matériau", value: form.material },
                       { label: "Remplissage", value: form.infill },
@@ -463,14 +480,12 @@ export default function OrderPage() {
                 <div className="flex gap-4">
                   <button onClick={() => setStep(2)} className="btn-secondary flex-1 justify-center">← Modifier</button>
                   <button onClick={handleCheckout} disabled={loading} className="btn-primary flex-1 justify-center text-lg disabled:opacity-50">
-                    {loading ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />Chargement…
-                      </span>
+                    {uploading ? (
+                      <span className="flex items-center gap-2"><Loader2 size={18} className="animate-spin" /> Upload des fichiers…</span>
+                    ) : loading ? (
+                      <span className="flex items-center gap-2"><Loader2 size={18} className="animate-spin" /> Chargement…</span>
                     ) : (
-                      <span className="flex items-center gap-2">
-                        <ShoppingCart size={18} /> Payer {total().toFixed(2)} CHF
-                      </span>
+                      <span className="flex items-center gap-2"><ShoppingCart size={18} /> Payer {total().toFixed(2)} CHF</span>
                     )}
                   </button>
                 </div>
@@ -481,7 +496,7 @@ export default function OrderPage() {
             )}
           </div>
 
-          {/* ── RIGHT: Summary ── */}
+          {/* ── Summary ── */}
           <div className="lg:col-span-1">
             <div className="sticky top-40 border border-gray-800 p-6 bg-black/50">
               <h3 className="font-display text-xl text-white uppercase tracking-wider mb-4 border-b border-gray-800 pb-4">
@@ -502,6 +517,7 @@ export default function OrderPage() {
                 </div>
               </div>
               <div className="mt-6 p-4 border border-yellow-400/20 bg-yellow-400/5 text-xs text-yellow-400/70 space-y-1">
+                <p>✓ Fichiers stockés sur Cloudflare R2</p>
                 <p>✓ Devis ajusté au poids réel</p>
                 <p>✓ Paiement 100% sécurisé</p>
                 <p>✓ Remboursement si fichier non imprimable</p>

@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { form, files, total, subtotal, deliveryPrice } = body;
+    const { form, fileUrls, fileNames, total, subtotal, deliveryPrice } = body;
 
     if (!form || total === undefined) {
       return NextResponse.json({ error: "Données manquantes" }, { status: 400 });
@@ -17,17 +17,10 @@ export async function POST(request: NextRequest) {
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
         price_data: {
-          currency: "eur",
+          currency: "chf",
           product_data: {
             name: `Impression 3D — ${form.technology.toUpperCase()}`,
-            description: `Matériau: ${form.material} | Remplissage: ${form.infill} | Qté: ${form.quantity} | Poids estimé: ${form.weight}g${files?.length ? ` | Fichiers: ${files.join(", ")}` : ""}`,
-            metadata: {
-              technology: form.technology,
-              material: form.material,
-              infill: form.infill,
-              quantity: String(form.quantity),
-              weight: String(form.weight),
-            },
+            description: `Matériau: ${form.material} | Remplissage: ${form.infill} | Qté: ${form.quantity} | Poids estimé: ${form.weight}g`,
           },
           unit_amount: Math.round(subtotal * 100),
         },
@@ -38,10 +31,10 @@ export async function POST(request: NextRequest) {
     if (deliveryPrice > 0) {
       lineItems.push({
         price_data: {
-          currency: "eur",
+          currency: "chf",
           product_data: {
             name: "Livraison",
-            description: form.delivery === "express" ? "Chronopost Express 24h" : "Colissimo Standard 48-72h",
+            description: form.delivery === "express" ? "Swiss Post Priority 48h" : "Swiss Post Standard 48–72h",
           },
           unit_amount: Math.round(deliveryPrice * 100),
         },
@@ -64,16 +57,20 @@ export async function POST(request: NextRequest) {
         city: form.city,
         postalCode: form.postalCode,
         country: form.country,
+        technology: form.technology,
+        material: form.material,
+        infill: form.infill,
+        quantity: String(form.quantity),
+        weight: String(form.weight),
+        delivery: form.delivery,
         notes: form.notes || "",
-        addons: form.addons.join(","),
-        files: files?.join(",") || "",
+        fileUrls: (fileUrls || []).join(","),
+        fileNames: (fileNames || []).join(","),
       },
       shipping_address_collection: {
-        allowed_countries: ["FR", "BE", "CH", "LU", "CA"],
+        allowed_countries: ["CH", "FR", "BE", "LU", "CA"],
       },
-      invoice_creation: {
-        enabled: true,
-      },
+      invoice_creation: { enabled: true },
       locale: "fr",
     });
 
