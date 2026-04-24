@@ -8,16 +8,12 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const TECHNOLOGIES = [
   { id: "fdm-standard", label: "FDM Standard", sublabel: "0,07 CHF/g", resolution: "0.2 mm" },
-  { id: "fdm-pro", label: "FDM Pro", sublabel: "0,10 CHF/g", resolution: "0.1 mm" },
-  { id: "resin-standard", label: "Résine Standard", sublabel: "0,20 CHF/g", resolution: "0.05 mm" },
-  { id: "resin-engineering", label: "Résine Engineering", sublabel: "0,30 CHF/g", resolution: "0.05 mm" },
+  { id: "fdm-pro", label: "FDM Pro", sublabel: "0,08–0,09 CHF/g", resolution: "0.1 mm" },
 ];
 
 const MATERIALS_BY_TECH: Record<string, string[]> = {
   "fdm-standard": ["PLA - Blanc", "PLA - Noir", "PLA - Gris", "PLA - Rouge", "PLA - Bleu"],
   "fdm-pro": ["PETG - Noir", "PETG - Blanc", "PETG - Transparent", "ABS - Noir", "ABS - Blanc", "ABS - Gris"],
-  "resin-standard": ["Résine - Gris", "Résine - Blanc", "Résine - Transparent", "Résine - Noir"],
-  "resin-engineering": ["Résine ABS-Like - Gris", "Résine Dental", "Résine Flexible - Transparent"],
 };
 
 const INFILL_OPTIONS = ["15% (décoratif)", "30% (standard)", "50% (solide)", "80% (très solide)", "100% (massif)"];
@@ -88,9 +84,7 @@ export default function OrderPage() {
   const pricePerGram = () => {
     const rates: Record<string, number> = {
       "fdm-standard": 0.07,
-      "fdm-pro": 0.10,
-      "resin-standard": 0.20,
-      "resin-engineering": 0.30,
+      "fdm-pro": 0.09,
     };
     return rates[form.technology] ?? 0.07;
   };

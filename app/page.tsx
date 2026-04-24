@@ -246,10 +246,10 @@ export default function HomePage() {
                 Matériaux
               </span>
               <h2 className="font-display text-5xl md:text-7xl uppercase text-black leading-none">
-                Plus de<br />6 matériaux<br />disponibles.
+                3 matériaux<br />disponibles.
               </h2>
               <p className="mt-6 text-black/70 text-lg max-w-md leading-relaxed">
-                PLA, PETG et ABS pour le FDM — résine standard, flexible et engineering pour les pièces ultra-détaillées.
+                PLA, PETG et ABS — trois filaments pour couvrir tous vos besoins, du prototype léger à la pièce technique résistante à la chaleur.
                 Le matériau parfait pour chaque application.
               </p>
               <Link
@@ -261,7 +261,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {["PLA", "PETG", "ABS", "Résine", "Résine Flex.", "Résine Eng."].map((m) => (
+              {["PLA", "PETG", "ABS"].map((m) => (
                 <div key={m} className="bg-black/10 border border-black/20 p-4 hover:bg-black/20 transition-colors">
                   <span className="font-display text-2xl text-black uppercase">{m}</span>
                 </div>
