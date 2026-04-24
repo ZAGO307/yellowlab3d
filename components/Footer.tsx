@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -26,15 +26,18 @@ export default function Footer() {
             <span className="font-display text-2xl text-white">YellowLAB<span className="text-yellow-400">3D</span></span>
           </Link>
           <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-            Service d'impression 3D professionnel à Genève. FDM et résine haute résolution.
-            Nous donnons vie à vos idées avec précision et rapidité.
+            Service d&apos;impression 3D professionnel à Genève. Impression 3D filament —
+            PLA, PETG et ABS. Nous donnons vie à vos idées avec précision et rapidité.
           </p>
           <div className="flex gap-4 mt-6">
-            {[Instagram, Linkedin, Twitter].map((Icon, i) => (
-              <a key={i} href="#" className="w-10 h-10 border border-gray-700 flex items-center justify-center text-gray-500 hover:border-yellow-400 hover:text-yellow-400 transition-all">
-                <Icon size={16} />
-              </a>
-            ))}
+            <a
+              href="https://www.instagram.com/yellowlab3d"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 border border-gray-700 flex items-center justify-center text-gray-500 hover:border-yellow-400 hover:text-yellow-400 transition-all"
+            >
+              <Instagram size={16} />
+            </a>
           </div>
         </div>
 

@@ -7,8 +7,8 @@ import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const TECHNOLOGIES = [
-  { id: "fdm-standard", label: "FDM Standard", sublabel: "0,07 CHF/g", resolution: "0.2 mm" },
-  { id: "fdm-pro", label: "FDM Pro", sublabel: "0,08–0,09 CHF/g", resolution: "0.1 mm" },
+  { id: "fdm-standard", label: "Standard", sublabel: "0,07 CHF/g", resolution: "0.2 mm" },
+  { id: "fdm-pro", label: "Haute qualité", sublabel: "0,08–0,09 CHF/g", resolution: "0.1 mm" },
 ];
 
 const MATERIALS_BY_TECH: Record<string, string[]> = {

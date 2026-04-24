@@ -3,12 +3,12 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import {
   ArrowRight, Shield, Clock, ChevronDown,
-  Layers, Box,
+  Layers,
 } from "lucide-react";
 
 /* ─── Marquee data ─── */
 const MARQUEE = [
-  "FDM", "Résine", "Prototypage", "Série", "Genève",
+  "Impression 3D", "Prototypage", "Série", "Genève", "Sur-mesure",
   "Modélisation", "Qualité Pro", "Swiss Made",
 ];
 
@@ -16,17 +16,10 @@ const MARQUEE = [
 const SERVICES = [
   {
     icon: Layers,
-    title: "Impression FDM",
-    desc: "Filament fondu — idéal pour pièces fonctionnelles, prototypes solides et grandes séries.",
+    title: "Impression 3D",
+    desc: "Filament fondu — PLA, PETG, ABS. Idéal pour prototypes solides, pièces fonctionnelles et petites séries.",
     price: "dès 0,07 CHF/g",
-    tag: "Populaire",
-  },
-  {
-    icon: Box,
-    title: "Impression Résine",
-    desc: "Haute résolution UV — parfait pour bijoux, figurines, dentaire et pièces ultra-détaillées.",
-    price: "dès 0,20 CHF/g",
-    tag: "Premium",
+    tag: "Disponible",
   },
 ];
 
@@ -100,7 +93,7 @@ export default function HomePage() {
               className="mt-8 text-lg text-gray-400 max-w-xl leading-relaxed animate-fade-up opacity-0 reveal"
               style={{ transition: "opacity 0.6s 0.2s, transform 0.6s 0.2s" }}
             >
-              FDM et résine haute résolution — YellowLAB3D transforme vos fichiers en pièces réelles
+              YellowLAB3D transforme vos fichiers en pièces réelles
               avec une précision industrielle, directement depuis Genève.
             </p>
 
@@ -162,7 +155,7 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+          <div className="grid grid-cols-1 gap-6 max-w-lg">
             {SERVICES.map((s, i) => {
               const Icon = s.icon;
               return (
@@ -285,7 +278,7 @@ export default function HomePage() {
             { q: "Quels formats de fichiers acceptez-vous ?", a: "Nous acceptons STL, OBJ, STEP, STP, SolidWorks (.sldprt), Fusion 360, et plus. Si votre format n'est pas dans la liste, contactez-nous." },
             { q: "Quel est le délai de livraison ?", a: "La majorité de nos commandes sont expédiées en 48 à 72h. Pour les grandes séries, comptez 5 à 7 jours ouvrés." },
             { q: "Puis-je commander en petite quantité ?", a: "Absolument. On accepte à partir d'une seule pièce. Plus vous commandez, plus le coût unitaire diminue." },
-            { q: "Comment est calculé le prix ?", a: "Le prix dépend du poids de matière et de la technologie choisie (FDM ou résine). Obtenez un devis instantané sur notre page commande." },
+            { q: "Comment est calculé le prix ?", a: "Le prix dépend du poids de matière et de la technologie choisie (PLA, PETG, ABS). Obtenez un devis instantané sur notre page commande." },
           ].map((faq, i) => (
             <div
               key={i}

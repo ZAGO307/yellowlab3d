@@ -29,7 +29,7 @@ export default function ServicesPage() {
             Services &amp;<br /><span className="text-yellow-400">Tarifs</span>
           </h1>
           <p className="mt-6 text-gray-400 max-w-xl text-lg leading-relaxed">
-            Impression FDM uniquement. Pas de surprise — des tarifs clairs calculés au gramme de matière utilisée.
+            Impression 3D filament uniquement. Pas de surprise — des tarifs clairs calculés au gramme de matière utilisée.
           </p>
         </div>
       </section>
@@ -39,7 +39,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <span className="section-tag">Technologie</span>
-            <h2 className="section-title mt-2">Impression <span className="text-yellow-400">FDM</span></h2>
+            <h2 className="section-title mt-2">Impression <span className="text-yellow-400">3D</span></h2>
             <p className="text-gray-400 mt-4 max-w-xl">Dépôt de filament fondu — idéal pour prototypes solides, pièces fonctionnelles et petites séries.</p>
           </div>
 
